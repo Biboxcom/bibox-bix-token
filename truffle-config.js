@@ -17,10 +17,10 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
+require('dotenv').config();
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const infuraKey = "fj4jll3k.....";
-const mnemonic = "scatter reject utility pledge obscure abstract embrace ill almost parrot pass you";
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
@@ -50,7 +50,7 @@ module.exports = {
     },
 
     heco_test: {
-      provider: () => new HDWalletProvider(mnemonic, `https://http-testnet.hecochain.com`),
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://http-testnet.hecochain.com`),
       network_id: 256,       // Ropsten's id
       gas: 6000000,
       gasPrice: 100000000,        // Ropsten has a lower block limit than mainnet
@@ -60,7 +60,7 @@ module.exports = {
     },
 
     bsc_test: {
-      provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545`),
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://data-seed-prebsc-1-s1.binance.org:8545`),
       network_id: 97,       // Ropsten's id
       //gas: 6000000,
      // gasPrice: 1000000000,        // Ropsten has a lower block limit than mainnet
@@ -106,7 +106,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.3",
+      version: "0.8.0",
      //version: "0.5.1",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
@@ -127,5 +127,15 @@ module.exports = {
 
   db: {
     enabled: false
-  }
+  },
+
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    etherscan: process.env.BSC_API_KEY
+  },
+
+
+
 };

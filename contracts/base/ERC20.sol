@@ -112,6 +112,10 @@ abstract contract ERC20 is Context, IERC20 {
 
         return true;
     }
+
+    function isLocked(address account) public view virtual  returns (bool) {
+        return _lockedes[account];
+    }
 //-------------------------------------- internal ------------------------------------//
     /**
      * @dev Moves tokens `amount` from `sender` to `recipient`.
