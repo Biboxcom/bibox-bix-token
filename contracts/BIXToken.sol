@@ -7,11 +7,11 @@ import "./base/Ownable.sol";
 contract BIXToken is ERC20Pausable, Ownable{
 
     string public version = "2.0";
-    uint256 private _INIT_SUPPLY = 235972808.27 * (10**18);
+    uint256 public MAX_SUPPLY = 235972808.27 * (10**18);
 
     // constructor
-    constructor() ERC20("BIX Token v2","BIX", 18) {
-         _mint(_msgSender(), _INIT_SUPPLY);
+    constructor() ERC20("BIXToken","BIX", 18) {
+         _mint(_msgSender(), MAX_SUPPLY);
     }
 
 
@@ -21,6 +21,7 @@ contract BIXToken is ERC20Pausable, Ownable{
     }
 
     function mint(address account, uint256 amount) public  onlyOwner  returns (bool){
+        require(_totalSupply.add(amount) <= MAX_SUPPLY, "ERC20: total supply exceeds max supply");
         _mint(account, amount);
         return true;
     }
